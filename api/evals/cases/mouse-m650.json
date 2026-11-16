@@ -1,0 +1,78 @@
+{
+  "id": "mouse-m650",
+  "source": "real (SerpApi, 2026-11-16)",
+  "note": "M650 and M650 L are different sizes; white is a different color; MK650 is a keyboard combo.",
+  "query": "mouse Logitech Signature M650 sem fio",
+  "category": "electronics",
+  "country": "br",
+  "listings": [
+    {
+      "id": "o0",
+      "title": "Mouse Logitech Signature M650 Sem Fio",
+      "store": "Amazon.com.br - Retail",
+      "price": 149.99
+    },
+    {
+      "id": "o1",
+      "title": "Mouse Sem Fio Logitech Signature M650",
+      "store": "Logitech Store",
+      "price": 224.91
+    },
+    {
+      "id": "o4",
+      "title": "Rato sem fios Logitech M650 Branco",
+      "store": "Techinn.com",
+      "price": 174.99
+    },
+    {
+      "id": "o6",
+      "title": "Mouse Signature M650 Branco - Logitech",
+      "store": "Livrarias Curitiba",
+      "price": 229.9
+    },
+    {
+      "id": "o3",
+      "title": "Mouse Logitech M650 Signature L Bluetooth Preto 910-006231-C",
+      "store": "Magalu",
+      "price": 256.8
+    },
+    {
+      "id": "o15",
+      "title": "Mouse Logitech Signature M650 L Wireless USB / Bluetooth Grafite - 910-006231",
+      "store": "Jade",
+      "price": 219.99
+    },
+    {
+      "id": "o12",
+      "title": "Logitech Teclado E Rato Mk650 Espanhol",
+      "store": "Techinn.com",
+      "price": 465.99
+    },
+    {
+      "id": "o14",
+      "title": "Kit Teclado e Mouse Sem Fio 2,4ghz Mk650 920-010992 Logitech",
+      "store": "StartecMacae Informática e Games",
+      "price": 510.57
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "o0",
+        "o1"
+      ],
+      [
+        "o4",
+        "o6"
+      ],
+      [
+        "o3",
+        "o15"
+      ]
+    ],
+    "discard": [
+      "o12",
+      "o14"
+    ]
+  }
+}

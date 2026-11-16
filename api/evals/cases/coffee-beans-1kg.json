@@ -1,0 +1,71 @@
+{
+  "id": "coffee-beans-1kg",
+  "source": "synthetic (realistic Brazilian listings written for the eval)",
+  "note": "Ground coffee and 500 g contradict the query; a grinder is an accessory; a 2-pack is another product.",
+  "query": "café em grãos 1kg",
+  "category": "food",
+  "country": "br",
+  "listings": [
+    {
+      "id": "a",
+      "title": "Café em Grãos Melitta 1kg Tradicional",
+      "store": "Carrefour",
+      "price": 59.9
+    },
+    {
+      "id": "b",
+      "title": "Melitta Café em Grãos Tradicional 1kg",
+      "store": "Amazon.com.br",
+      "price": 57.5
+    },
+    {
+      "id": "c",
+      "title": "Café em Grãos Melitta 500g",
+      "store": "Pão de Açúcar",
+      "price": 31.9
+    },
+    {
+      "id": "d",
+      "title": "Café Torrado e Moído Melitta 1kg",
+      "store": "Carrefour",
+      "price": 54.9
+    },
+    {
+      "id": "e",
+      "title": "Café em Grãos 3 Corações Gourmet 1kg",
+      "store": "Amazon.com.br",
+      "price": 79.9
+    },
+    {
+      "id": "f",
+      "title": "Kit 2 Café em Grãos Melitta Tradicional 1kg",
+      "store": "Mercado Livre",
+      "price": 109.0
+    },
+    {
+      "id": "g",
+      "title": "Moedor de Café Manual Inox",
+      "store": "Magalu",
+      "price": 89.0
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "a",
+        "b"
+      ],
+      [
+        "e"
+      ],
+      [
+        "f"
+      ]
+    ],
+    "discard": [
+      "c",
+      "d",
+      "g"
+    ]
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "id": "mouse-logitech",
+  "source": "real (SerpApi, 2026-11-16)",
+  "note": "Same models from different stores must merge; G502 and G502 X must not.",
+  "query": "mouse sem fio Logitech",
+  "category": "electronics",
+  "country": "br",
+  "listings": [
+    {
+      "id": "o0",
+      "title": "Mouse Gamer Logitech G305 Lightspeed Sem Fio",
+      "store": "Amazon.com.br - Retail",
+      "price": 161.91
+    },
+    {
+      "id": "o1",
+      "title": "Mouse sem Fio Logitech M280",
+      "store": "Logitech Store",
+      "price": 80.02
+    },
+    {
+      "id": "o2",
+      "title": "Logitech Mouse Sem Fio M280",
+      "store": "Amazon.com.br - Retail",
+      "price": 75.99
+    },
+    {
+      "id": "o3",
+      "title": "Mouse Logitech Signature M650 Sem Fio",
+      "store": "KaBuM!",
+      "price": 149.99
+    },
+    {
+      "id": "o11",
+      "title": "Mouse Sem Fio Logitech MX Master 4",
+      "store": "Miranda",
+      "price": 616.55
+    },
+    {
+      "id": "o12",
+      "title": "Mouse Logitech MX Master 4 sem Fio",
+      "store": "Logitech Store",
+      "price": 699.9
+    },
+    {
+      "id": "o13",
+      "title": "Mouse Logitech M185 Cinza Sem Fio",
+      "store": "KaBuM!",
+      "price": 67.9
+    },
+    {
+      "id": "o16",
+      "title": "Mouse Gamer Logitech G502 Lightspeed Sem Fio",
+      "store": "Magalu",
+      "price": 679.99
+    },
+    {
+      "id": "o18",
+      "title": "Mouse Gamer Sem Fio Logitech G502 X Lightspeed",
+      "store": "KaBuM!",
+      "price": 619.99
+    },
+    {
+      "id": "o19",
+      "title": "Mouse Sem Fio Logitech Signature M650",
+      "store": "Logitech Store",
+      "price": 224.91
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "o1",
+        "o2"
+      ],
+      [
+        "o3",
+        "o19"
+      ],
+      [
+        "o11",
+        "o12"
+      ],
+      [
+        "o0"
+      ],
+      [
+        "o13"
+      ],
+      [
+        "o16"
+      ],
+      [
+        "o18"
+      ]
+    ],
+    "discard": []
+  }
+}

@@ -1,0 +1,149 @@
+version: 2
+
+models:
+  - name: silver_offers
+    description: Normalized listings, one per row.
+    data_tests: [not_empty]
+    columns:
+      - name: search_id
+        data_tests: [not_null]
+      - name: country
+        data_tests: [not_null]
+      - name: offer_id
+        data_tests: [not_null]
+      - name: title
+        data_tests: [not_null]
+      - name: store
+        data_tests: [not_null]
+      - name: price
+        data_tests: [not_null]
+      - name: fetched_at
+        data_tests: [not_null]
+
+  - name: gold_product_offers
+    description: The cheapest offer of each store, per product.
+    data_tests: [not_empty]
+    columns:
+      - name: product_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('gold_products')
+                field: product_id
+      - name: store
+        data_tests: [not_null]
+      - name: price
+        data_tests: [not_null]
+
+  - name: gold_products
+    description: Products with their lowest price and number of stores.
+    data_tests: [not_empty]
+    columns:
+      - name: product_id
+        data_tests: [not_null, unique]
+      - name: country
+        data_tests: [not_null]
+      - name: name
+        data_tests: [not_null]
+      - name: category
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [furniture, electronics, appliances, books, food, health, beauty, fashion, home, sports, toys, pets, auto, other]
+      - name: min_price
+        data_tests: [not_null]
+      - name: store_count
+        data_tests: [not_null]
+
+  - name: gold_llm_usage_daily
+    description: Model calls per day, task, model and prompt version.
+    columns:
+      - name: day
+        data_tests: [not_null]
+      - name: calls
+        data_tests: [not_null]
+
+  - name: gold_llm_versions
+    description: Calls, tokens, cost and latency per task, model and prompt version.
+    data_tests: [not_empty]
+    columns:
+      - name: model
+        data_tests: [not_null]
+      - name: prompt_version
+        data_tests: [not_null]
+
+  - name: gold_agent_runs
+    description: One row per shopping request with its duration, steps, model calls and cost.
+    data_tests: [not_empty]
+    columns:
+      - name: request_id
+        data_tests: [not_null, unique]
+      - name: status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [queued, running, done, failed]
+
+  - name: gold_agent_tool_steps
+    description: Every tool the agent called, with its duration and outcome.
+    columns:
+      - name: request_id
+        data_tests: [not_null]
+      - name: tool
+        data_tests: [not_null]
+
+  - name: gold_search_stages
+    description: How long each stage of every search took (fetch, silver, judge, gold).
+    data_tests: [not_empty]
+    columns:
+      - name: request_id
+        data_tests: [not_null]
+      - name: stage
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [fetch, silver, judge, gold]
+      - name: duration_ms
+        data_tests: [not_null]
+
+unit_tests:
+  - name: gold_offers_keep_the_cheapest_offer_of_each_store
+    description: Discarded listings are dropped and each store keeps only its cheapest offer.
+    model: gold_product_offers
+    given:
+      - input: source('app', 'judged_offers')
+        rows:
+          - {search_id: s1, offer_id: o1, product_key: p1, discarded: false}
+          - {search_id: s1, offer_id: o2, product_key: p1, discarded: false}
+          - {search_id: s1, offer_id: o3, product_key: p1, discarded: false}
+          - {search_id: s1, offer_id: o4, product_key: null, discarded: true}
+      - input: ref('silver_offers')
+        rows:
+          - {search_id: s1, country: br, offer_id: o1, store: KaBuM!, price: 249.9}
+          - {search_id: s1, country: br, offer_id: o2, store: Amazon, price: 299.0}
+          - {search_id: s1, country: br, offer_id: o3, store: Amazon, price: 279.0}
+          - {search_id: s1, country: br, offer_id: o4, store: Shopee, price: 59.9}
+    expect:
+      rows:
+        - {product_id: s1-p1, offer_id: o1, store: KaBuM!, price: 249.9}
+        - {product_id: s1-p1, offer_id: o3, store: Amazon, price: 279.0}
+
+  - name: gold_products_take_the_lowest_price_and_map_legacy_categories
+    description: A product's price is its cheapest store; categories from the furniture-only judge become furniture.
+    model: gold_products
+    given:
+      - input: source('app', 'judged_offers')
+        rows:
+          - {search_id: s1, offer_id: o1, product_key: p1, product_name: Sofa, category: sofa, discarded: false}
+          - {search_id: s1, offer_id: o2, product_key: p1, product_name: Sofa, category: sofa, discarded: false}
+          - {search_id: s1, offer_id: o3, product_key: p2, product_name: Book, category: books, discarded: false}
+      - input: ref('gold_product_offers')
+        rows:
+          - {product_id: s1-p1, country: br, store: Mobly, price: 1299.0, image_url: mobly.jpg}
+          - {product_id: s1-p1, country: br, store: Etna, price: 1349.0, image_url: etna.jpg}
+          - {product_id: s1-p2, country: br, store: Amazon, price: 9.9, image_url: book.jpg}
+    expect:
+      rows:
+        - {product_id: s1-p1, category: furniture, min_price: 1299.0, store_count: 2, image_url: mobly.jpg}
+        - {product_id: s1-p2, category: books, min_price: 9.9, store_count: 1, image_url: book.jpg}

@@ -1,0 +1,76 @@
+{
+  "id": "sofa-gray-retractable",
+  "source": "real (SerpApi, 2026-11-16)",
+  "note": "Sofa beds, 5 seats and other colors contradict the query; 1.80 m and 1.50 m Verona differ.",
+  "query": "sofá 3 lugares cinza retrátil",
+  "category": "furniture",
+  "country": "br",
+  "listings": [
+    {
+      "id": "o10",
+      "title": "Sofá Retrátil/reclinável Verona 1,80m Suede Velut Cinza C/ Molas No Assento (Sofá Retrátil/Reclinável Verona 1,80m Suede Velut Cinza c/ Molas no As...",
+      "store": "Shofinityy",
+      "price": 2226.99
+    },
+    {
+      "id": "o17",
+      "title": "Sofá Retrátil Reclinável Verona 1.50m Cinza Lunar Molas no Assento - King House",
+      "store": "Amazon",
+      "price": 1719.4
+    },
+    {
+      "id": "o9",
+      "title": "Sofá Retrátil Reclinável 3 Lugares 215cm Roma F05 Veludo Azul - Mpozenato",
+      "store": "Mpozenato",
+      "price": 2516.33
+    },
+    {
+      "id": "o14",
+      "title": "Sofá Retrátil Reclinável 3 Lugares 215cm Roma F05 Veludo Azul - Mpozenato",
+      "store": "Shopee",
+      "price": 3520.77
+    },
+    {
+      "id": "o21",
+      "title": "Sofá 5 Lugares Retrátil E Reclinável Martins M-180 Veludo Cinza",
+      "store": "Le biscuit",
+      "price": 5315.24
+    },
+    {
+      "id": "o5",
+      "title": "Sofá-cama Casal 3 Lugares Reclinável Veludo Matrix Emília",
+      "store": "Uau CAIXA",
+      "price": 1449.9
+    },
+    {
+      "id": "o6",
+      "title": "Sofá-cama Casal 3 Lugares Reclinável Veludo Matrix Emília",
+      "store": "Smiles",
+      "price": 1449.9
+    },
+    {
+      "id": "o2",
+      "title": "Sofá Cama 3 Lugares Casal Reclinável Suede com Almofada (Bege)",
+      "store": "Amazon.com.br - Seller",
+      "price": 759.9
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "o10"
+      ],
+      [
+        "o17"
+      ]
+    ],
+    "discard": [
+      "o9",
+      "o14",
+      "o21",
+      "o5",
+      "o6",
+      "o2"
+    ]
+  }
+}

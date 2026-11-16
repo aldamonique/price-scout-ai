@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: app
+    description: >
+      Tables owned and written by the API (see api/.../duckdb/schema.sql).
+      dbt only reads them. Run `uv run python scripts/init_warehouse.py` in api/
+      before the first `dbt build`, so they exist.
+    schema: main
+    tables:
+      - name: judged_offers
+        description: >
+          The judge's verdict for each listing: which product it belongs to,
+          or why it was discarded.
+      - name: shopping_requests
+        description: Each shopping request, its status, agent steps and final plan.
+      - name: llm_calls
+        description: One row per model call (agent or judge), with tokens, cost and latency.

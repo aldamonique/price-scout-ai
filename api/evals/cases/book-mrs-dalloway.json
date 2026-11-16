@@ -1,0 +1,73 @@
+{
+  "id": "book-mrs-dalloway",
+  "source": "synthetic (realistic Brazilian listings written for the eval)",
+  "note": "Each format and the box set are different products; another title and a bookmark are not the book.",
+  "query": "Mrs Dalloway Virginia Woolf livro",
+  "category": "books",
+  "country": "br",
+  "listings": [
+    {
+      "id": "a",
+      "title": "Mrs Dalloway - Virginia Woolf - Edição de Bolso - Penguin Companhia",
+      "store": "Amazon.com.br",
+      "price": 29.9
+    },
+    {
+      "id": "b",
+      "title": "Livro Mrs. Dalloway (Penguin Companhia, Edição de Bolso)",
+      "store": "Livraria Cultura",
+      "price": 32.0
+    },
+    {
+      "id": "c",
+      "title": "Mrs Dalloway Capa Dura Edição Especial Antofágica",
+      "store": "Antofágica",
+      "price": 89.9
+    },
+    {
+      "id": "d",
+      "title": "Mrs Dalloway eBook Kindle",
+      "store": "Amazon.com.br",
+      "price": 9.9
+    },
+    {
+      "id": "e",
+      "title": "Box Virginia Woolf 3 Livros: Mrs Dalloway, Ao Farol e Orlando",
+      "store": "Magalu",
+      "price": 119.9
+    },
+    {
+      "id": "f",
+      "title": "Marcador de Página Virginia Woolf",
+      "store": "Elo7",
+      "price": 12.0
+    },
+    {
+      "id": "g",
+      "title": "Ao Farol - Virginia Woolf",
+      "store": "Amazon.com.br",
+      "price": 39.9
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "a",
+        "b"
+      ],
+      [
+        "c"
+      ],
+      [
+        "d"
+      ],
+      [
+        "e"
+      ]
+    ],
+    "discard": [
+      "f",
+      "g"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "search_id": "ci-empty",
+  "query": "produto inexistente",
+  "country": "br",
+  "fetched_at": "2026-11-16T12:10:00Z",
+  "payload": {"shopping_results": []}
+}

@@ -1,0 +1,101 @@
+{
+  "id": "tv-stand-180",
+  "source": "real (SerpApi, 2026-11-16)",
+  "note": "A wall panel and a room set are not a TV stand; cinnamon and cinnamon/white differ.",
+  "query": "rack para tv 180 cm",
+  "category": "furniture",
+  "country": "br",
+  "listings": [
+    {
+      "id": "o0",
+      "title": "Rack para TV até 75\" com 2 Gavetas Artely Verona",
+      "store": "Smiles",
+      "price": 739.99
+    },
+    {
+      "id": "o4",
+      "title": "Rack para TV Até 75 Polegadas 2 Gavetas Verona Artely",
+      "store": "Le biscuit",
+      "price": 603.37
+    },
+    {
+      "id": "o9",
+      "title": "Rack para TV Até 75 Polegadas 2 Gavetas Verona Artely",
+      "store": "Pontofrio.com",
+      "price": 649.0
+    },
+    {
+      "id": "o15",
+      "title": "Rack Artely Verona com 180 cm de Largura, 2 Gavetas, Ideal para TV de Até 75",
+      "store": "Shopee",
+      "price": 540.1
+    },
+    {
+      "id": "o2",
+      "title": "Rack Sala Guarapari Para Tv De Até 75 Polegadas Com 3 Portas Móveis Bechara",
+      "store": "Mercado Livre",
+      "price": 879.19
+    },
+    {
+      "id": "o3",
+      "title": "Rack Sala Guarapari Para Tv De Até 75 Polegadas Com 3 Portas Móveis Bechara",
+      "store": "Mercado Livre",
+      "price": 789.9
+    },
+    {
+      "id": "o17",
+      "title": "Rack Kappesberg 3 Portas Canela/Branco 180cm",
+      "store": "Shop Coopera",
+      "price": 649.99
+    },
+    {
+      "id": "o19",
+      "title": "Rack Kappesberg 3 Portas Canela/Branco 180cm",
+      "store": "Casa & Video",
+      "price": 519.99
+    },
+    {
+      "id": "o1",
+      "title": "Rack Kappesberg 3 Portas Canela 180cm",
+      "store": "Le biscuit",
+      "price": 532.99
+    },
+    {
+      "id": "o22",
+      "title": "Painel Para Tv Até 70 Polegadas Home Suspenso Concept Off-white 1.8 Off-white/amadeirado",
+      "store": "Pontofrio.com",
+      "price": 1847.37
+    },
+    {
+      "id": "o5",
+      "title": "Conjunto Sala Charlotte: Rack 4524+ Mesa 4518+ Buffet 4520",
+      "store": "MadeiraMadeira",
+      "price": 671.73
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "o0",
+        "o4",
+        "o9",
+        "o15"
+      ],
+      [
+        "o2",
+        "o3"
+      ],
+      [
+        "o17",
+        "o19"
+      ],
+      [
+        "o1"
+      ]
+    ],
+    "discard": [
+      "o22",
+      "o5"
+    ]
+  }
+}

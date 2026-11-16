@@ -1,0 +1,43 @@
+# Stores blocked per market. `default` applies everywhere; a market can add
+# stores (`also_blocked`) or allow some back (`allowed`). Matched by name prefix.
+
+default:
+  reason: >
+    Cross-border marketplace: long delivery, import taxes and weak buyer
+    protection for a local shopper.
+  blocked:
+    - AliExpress
+    - Alibaba
+    - Temu
+    - Shein
+    - Wish
+    - DHgate
+    - Banggood
+    - Joom
+    - Gearbest
+    - LightInTheBox
+    - Tomtop
+    - Geekbuying
+    - Desertcart
+    - Ubuy
+    - Fruugo
+
+markets:
+  br:
+    reason: >
+      Cross-border marketplace: long delivery, import taxes and weak buyer
+      protection for a shopper in Brazil.
+    also_blocked:
+      - eBay
+  mx:
+    also_blocked:
+      - eBay
+  ar:
+    also_blocked:
+      - eBay
+  pt:
+    also_blocked:
+      - eBay
+  es:
+    also_blocked:
+      - eBay

@@ -1,0 +1,13 @@
+.env
+data/
+*.duckdb
+analytics/target/
+analytics/logs/
+node_modules/
+dist/
+__pycache__/
+.venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+analytics/.user.yml

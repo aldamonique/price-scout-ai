@@ -1,0 +1,13 @@
+{
+  "search_id": "ci-book",
+  "query": "mrs dalloway livro",
+  "country": "br",
+  "fetched_at": "2026-11-16T12:05:00Z",
+  "payload": {
+    "shopping_results": [
+      {"position": 1, "title": "Mrs. Dalloway - Virginia Woolf (Brochura)", "source": "Amazon", "extracted_price": 9.9, "link": "https://example.com/amazon/dalloway"},
+      {"position": 2, "title": "Mrs Dalloway Brochura", "source": "Estante Virtual", "extracted_price": 18.5, "link": "https://example.com/ev/dalloway"},
+      {"position": 3, "title": "Ebook - Mrs Dalloway", "source": "publica.la", "extracted_price": 6.21, "link": "https://example.com/publica/dalloway"}
+    ]
+  }
+}

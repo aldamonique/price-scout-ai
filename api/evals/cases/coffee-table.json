@@ -1,0 +1,98 @@
+{
+  "id": "coffee-table",
+  "source": "real (SerpApi, 2026-11-16)",
+  "note": "An aparador is a console table; Buriti off white and off white/nature differ.",
+  "query": "mesa de centro",
+  "category": "furniture",
+  "country": "br",
+  "listings": [
+    {
+      "id": "o0",
+      "title": "Mesa Aparador Cebola Decorativo Base Laminada 100 cm JID DECORAÇÕES",
+      "store": "Mercado Livre",
+      "price": 669.99
+    },
+    {
+      "id": "o2",
+      "title": "Mesa Centro 100x50 Ripada Madeira Rustica Castanho",
+      "store": "Magalu",
+      "price": 625.3
+    },
+    {
+      "id": "o3",
+      "title": "Mesa Centro 100x50 Ripada Madeira Rustica Castanho",
+      "store": "Mais Correios",
+      "price": 562.77
+    },
+    {
+      "id": "o8",
+      "title": "Mesa Centro 100x50 Ripada Madeira Rustica Castanho mo Ofertamo",
+      "store": "Mercado Livre",
+      "price": 542.22
+    },
+    {
+      "id": "o9",
+      "title": "Dalla Costa Mesa de Centro Orgânica Off White",
+      "store": "Multiloja",
+      "price": 125.91
+    },
+    {
+      "id": "o13",
+      "title": "Dalla Costa Mesa de Centro Orgânica Off White",
+      "store": "Leroy Merlin",
+      "price": 125.47
+    },
+    {
+      "id": "o14",
+      "title": "ARTELY Mesa de Centro Jasmin Cinamomo",
+      "store": "Magalu",
+      "price": 203.31
+    },
+    {
+      "id": "o20",
+      "title": "Artely Mesa de Centro Jasmin",
+      "store": "Mais Correios",
+      "price": 234.43
+    },
+    {
+      "id": "o17",
+      "title": "MESA DE CENTRO BURITI COM PÉS EM MADEIRA MACIÇA OFF WHITE",
+      "store": "1001 Projetos",
+      "price": 400.0
+    },
+    {
+      "id": "o19",
+      "title": "MESA DE CENTRO BURITI COM PÉS EM MADEIRA MACIÇA OFF WHITE/NATURE",
+      "store": "1001 Projetos",
+      "price": 400.0
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "o2",
+        "o3",
+        "o8"
+      ],
+      [
+        "o9",
+        "o13"
+      ],
+      [
+        "o14"
+      ],
+      [
+        "o20"
+      ],
+      [
+        "o17"
+      ],
+      [
+        "o19"
+      ]
+    ],
+    "discard": [
+      "o0"
+    ]
+  }
+}

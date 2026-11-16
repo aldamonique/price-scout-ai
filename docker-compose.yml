@@ -1,0 +1,89 @@
+x-lake: &lake
+  LAKE__BACKEND: s3
+  LAKE__ENDPOINT: localstack:4566
+  LAKE__USE_SSL: "false"
+  LAKE__BUCKET: ${LAKE__BUCKET:-price-scout-lake}
+  LAKE__REGION: ${LAKE__REGION:-us-east-1}
+  LAKE__ACCESS_KEY_ID: ${LAKE__ACCESS_KEY_ID:-test}
+  LAKE__SECRET_ACCESS_KEY: ${LAKE__SECRET_ACCESS_KEY:-test}
+
+services:
+  localstack:
+    image: localstack/localstack:4.9
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3
+      LAKE__BUCKET: ${LAKE__BUCKET:-price-scout-lake}
+    volumes:
+      - lake:/var/lib/localstack
+      - ./infra/localstack/create-bucket.sh:/etc/localstack/init/ready.d/create-bucket.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "awslocal s3api head-bucket --bucket $$LAKE__BUCKET"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+
+  seed-lake:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    depends_on:
+      localstack:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      <<: *lake
+      DATA_DIR: /app/data
+    volumes:
+      - warehouse:/app/data
+      - ./data/bronze:/seed:ro
+    command: ["sh", "-c", "python scripts/init_warehouse.py && python scripts/sync_bronze_to_lake.py /seed"]
+
+  dbt:
+    build:
+      context: .
+      dockerfile: analytics/Dockerfile
+    depends_on:
+      seed-lake:
+        condition: service_completed_successfully
+    environment: *lake
+    volumes:
+      - warehouse:/app/data
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    depends_on:
+      dbt:
+        condition: service_completed_successfully
+    env_file: .env
+    environment:
+      <<: *lake
+      DATA_DIR: /app/data
+      LAKE__MIRROR_DIR: /app/data/bronze
+    volumes:
+      - warehouse:/app/data
+      - ./data/bronze:/app/data/bronze
+    ports:
+      - "${API_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-8080}:80"
+
+volumes:
+  lake:
+  warehouse:

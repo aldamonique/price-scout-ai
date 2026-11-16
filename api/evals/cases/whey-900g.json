@@ -1,0 +1,73 @@
+{
+  "id": "whey-900g",
+  "source": "synthetic (realistic Brazilian listings written for the eval)",
+  "note": "Flavor and pack size define the product; a shaker is an accessory; 1 kg contradicts 900 g.",
+  "query": "whey protein isolado 900g",
+  "category": "health",
+  "country": "br",
+  "listings": [
+    {
+      "id": "a",
+      "title": "Whey Protein Isolado 900g Baunilha Growth Supplements",
+      "store": "Growth Supplements",
+      "price": 189.9
+    },
+    {
+      "id": "b",
+      "title": "Growth Whey Isolado 900g sabor Baunilha",
+      "store": "Amazon.com.br",
+      "price": 179.0
+    },
+    {
+      "id": "c",
+      "title": "Whey Protein Isolado 900g Chocolate Growth",
+      "store": "Growth Supplements",
+      "price": 189.9
+    },
+    {
+      "id": "d",
+      "title": "Whey Protein Isolado 1kg Baunilha Growth",
+      "store": "Netshoes",
+      "price": 209.9
+    },
+    {
+      "id": "e",
+      "title": "Coqueteleira Growth 700ml",
+      "store": "Growth Supplements",
+      "price": 29.9
+    },
+    {
+      "id": "f",
+      "title": "Kit 2x Whey Protein Isolado 900g Baunilha Growth",
+      "store": "Mercado Livre",
+      "price": 359.0
+    },
+    {
+      "id": "g",
+      "title": "Max Titanium Whey Isolado 900g Baunilha",
+      "store": "Netshoes",
+      "price": 159.9
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "a",
+        "b"
+      ],
+      [
+        "c"
+      ],
+      [
+        "f"
+      ],
+      [
+        "g"
+      ]
+    ],
+    "discard": [
+      "d",
+      "e"
+    ]
+  }
+}

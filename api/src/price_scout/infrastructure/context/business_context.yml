@@ -1,0 +1,56 @@
+# Business context for the price comparison app, written for the model to read.
+# Every rule here is something an experienced shop assistant knows and a language
+# model may get wrong. The rules apply to every market. Brazilian Portuguese terms
+# stay next to their meaning, because Brazil is the default market.
+
+categories:
+  furniture: Sofas, tables, chairs, desks, beds, wardrobes, shelves, TV stands.
+  electronics: Phones, laptops, tablets, headphones, keyboards, chargers, cameras, consoles.
+  appliances: Fridges, stoves, washing machines, microwaves, air fryers, vacuum cleaners.
+  books: Printed books, box sets and e-books.
+  food: Groceries, drinks, snacks and coffee.
+  health: Medicines, vitamins and supplements (whey protein, creatine).
+  beauty: Cosmetics, skincare, perfume and hair care.
+  fashion: Clothes, shoes, bags and accessories you wear.
+  home: Decor, bedding, kitchenware, lighting and rugs.
+  sports: Sports equipment and gym gear.
+  toys: Toys and games.
+  pets: Pet food and pet supplies.
+  auto: Car parts and car accessories.
+  other: Anything that fits no category above.
+
+glossary:
+  kit / combo / jogo / conjunto (kit, bundle, set): >
+    More than one unit or piece sold together. Always a different product from
+    the single unit, even when the brand and model match.
+  refil (refill): A refill is a different product from the full package.
+  recondicionado / seminovo / vitrine (refurbished / like new / display unit): Not new.
+  genérico (generic drug): >
+    A generic medicine is a different product from the reference brand, even with
+    the same active ingredient and dose.
+  comprimidos / cápsulas (tablets / capsules): >
+    The count in the box ("20 comprimidos") is part of the product. A box of 10 and
+    a box of 30 are different products.
+  capa dura / brochura / e-book (hardcover / paperback / e-book): Different products of the same book.
+  retrátil (retractable sofa): >
+    A sofa whose seat slides forward. "Retrátil e reclinável" is a different
+    product from "retrátil" alone.
+  cama box (box spring bed): >
+    The bed base. "Cama box" without colchão (mattress) is only the base; the base
+    and the set with a mattress are different products.
+  rack (tv stand): Low furniture for the TV. Different from painel, which goes on the wall.
+
+rules:
+  - Size, capacity, weight, volume, dose and quantity define the product. 128 GB and 256 GB, 900 g and 1 kg, 500 mg and 750 mg, 2 seats and 3 seats are never the same product.
+  - Different colors and different flavors are different products.
+  - A product is never the same as its accessory or spare part, even when the title names the product (a phone case mentions the phone).
+  - Many countries use a comma as the decimal separator ("2,10m", "1,5kg"). Convert meters to centimeters (2.10 m = 210).
+  - For furniture, width is the largest horizontal measurement; a single measurement on a sofa, table or TV stand is the width.
+  - Book listings for the same title and author but another edition, translation or format are different products.
+
+always_discard:
+  - Accessories and spare parts when the product itself was asked for (cases, screen protectors, covers, cables, legs, handles).
+  - Used, refurbished, display, open-box and rental listings, unless the query asks for them.
+  - Services: assembly, installation, extended warranties, shipping, subscriptions.
+  - Toy or miniature versions of the product.
+  - Listings for a different product type than the one searched for.

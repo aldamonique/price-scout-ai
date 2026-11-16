@@ -1,0 +1,76 @@
+{
+  "id": "notebook-i7-512",
+  "source": "real (SerpApi, 2026-11-16)",
+  "note": "i5 and 1 TB listings contradict the query; the Ubuntu model is a different SKU.",
+  "query": "notebook Dell Inspiron Intel Core i7 13ª geração 16GB SSD 512GB novo",
+  "category": "electronics",
+  "country": "br",
+  "listings": [
+    {
+      "id": "o0",
+      "title": "Notebook Dell Inspiron 15 I15-I1300-A30P Intel Core i5 8GB RAM 512GB S",
+      "store": "Amazon.com.br - Retail",
+      "price": 3899.0
+    },
+    {
+      "id": "o2",
+      "title": "Notebook Dell 15 I Dc15-i71355u-u90 15.6\" Full Hd 13a Gen Intel Core i7 16gb 512gb SSD Ubuntu Linux",
+      "store": "KaBuM!",
+      "price": 6623.08
+    },
+    {
+      "id": "o3",
+      "title": "Notebook 15,6 Full HD Inspiron I15-I1300-A80P Windows 11 Intel Core i7 16GB DDR4 1TB SSD Dell",
+      "store": "Amazon.com.br - Retail",
+      "price": 5948.71
+    },
+    {
+      "id": "o5",
+      "title": "Notebook Dell 15 I DC15-i71355U-M90 15.6\" Full HD 13a Gen Intel Core i7 16GB 512GB SSD Win 11 Preto Carbono",
+      "store": "Amazon.com.br - Seller",
+      "price": 7124.05
+    },
+    {
+      "id": "o6",
+      "title": "Notebook Dell 15 I Dc15-i71355u-m90 15.6\" Full Hd 13a Gen Intel Core i7 16gb 512gb SSD Win 11 Preto Carbono",
+      "store": "KaBuM!",
+      "price": 6899.08
+    },
+    {
+      "id": "o11",
+      "title": "Notebook Dell Inspiron I15-I1300-A30P 15.6\" Full HD 13a Gen Intel Core i5 8GB 512GB SSD Win 11 Preto Carbono + Microsoft 365 Family (12 meses) até 6",
+      "store": "Amazon",
+      "price": 4338.9
+    },
+    {
+      "id": "o15",
+      "title": "Dell Inspiron 15 3530 15,6\" i5 13a Geração",
+      "store": "John Notebook Brasil",
+      "price": 4409.1
+    },
+    {
+      "id": "o17",
+      "title": "Notebook Dell Inspiron I15-I1300-A80P 15.6\" Full HD 13a Gen Intel Core i7 16GB 1TB SSD Win 11 Preto Carbono + Microsoft 365 Family (12 meses) até 6",
+      "store": "Amazon",
+      "price": 6388.61
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "o5",
+        "o6"
+      ],
+      [
+        "o2"
+      ]
+    ],
+    "discard": [
+      "o0",
+      "o3",
+      "o11",
+      "o15",
+      "o17"
+    ]
+  }
+}

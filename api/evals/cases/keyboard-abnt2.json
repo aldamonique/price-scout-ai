@@ -1,0 +1,76 @@
+{
+  "id": "keyboard-abnt2",
+  "source": "real (SerpApi, 2026-11-16)",
+  "note": "The black and the white Husky Anchorage are different products.",
+  "query": "teclado mecânico ABNT2",
+  "category": "electronics",
+  "country": "br",
+  "listings": [
+    {
+      "id": "o0",
+      "title": "Titorion Teclado Mecânico 60% Hot Swap ABNT2",
+      "store": "Amazon.com.br - Seller",
+      "price": 130.23
+    },
+    {
+      "id": "o16",
+      "title": "Titorion Teclado Mecânico 60% Hot Swap Switch ABNT2",
+      "store": "Amazon.com.br - Seller",
+      "price": 130.23
+    },
+    {
+      "id": "o4",
+      "title": "Teclado Mecânico Gamer Husky Anchorage Full Size, RGB, Switch Gateron EF Brown, ABNT2, Preto - HTG200PTMA",
+      "store": "Amazon.com.br - Seller",
+      "price": 156.99
+    },
+    {
+      "id": "o15",
+      "title": "Teclado Mecânico Gamer Husky Anchorage Full Size, RGB, Switch Gateron EF Brown, ABNT2, Branco - HTG200BRMA",
+      "store": "KaBuM!",
+      "price": 189.99
+    },
+    {
+      "id": "o7",
+      "title": "Teclado Gamer Redragon Lakshmi",
+      "store": "Pichau",
+      "price": 139.99
+    },
+    {
+      "id": "o18",
+      "title": "Teclado Gamer Redragon Mecânico Mitra RGB",
+      "store": "KaBuM!",
+      "price": 199.99
+    },
+    {
+      "id": "o1",
+      "title": "Teclado Gamer Mecânico Akko 5075 Clear Black",
+      "store": "Terabyteshop",
+      "price": 89.99
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "o0",
+        "o16"
+      ],
+      [
+        "o4"
+      ],
+      [
+        "o15"
+      ],
+      [
+        "o7"
+      ],
+      [
+        "o18"
+      ],
+      [
+        "o1"
+      ]
+    ],
+    "discard": []
+  }
+}

@@ -1,0 +1,10 @@
+name: price_scout
+version: "1.0.0"
+profile: price_scout
+
+model-paths: ["models"]
+test-paths: ["tests"]
+
+models:
+  price_scout:
+    +materialized: view

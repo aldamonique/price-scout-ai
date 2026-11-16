@@ -1,0 +1,105 @@
+{
+  "id": "standing-desk",
+  "source": "real (SerpApi, 2026-11-16)",
+  "note": "A frame without a top, a laptop stand and a fixed desk are not height-adjustable desks.",
+  "query": "mesa com regulagem de altura elétrica",
+  "category": "furniture",
+  "country": "br",
+  "listings": [
+    {
+      "id": "o0",
+      "title": "Mesa Executiva Em Tamburato Modelo 2000 Artany",
+      "store": "Shopee",
+      "price": 1113.2
+    },
+    {
+      "id": "o1",
+      "title": "Mesa Portátil UP Multivisão Preta",
+      "store": "Magalu",
+      "price": 167.31
+    },
+    {
+      "id": "o22",
+      "title": "Estrutura de Mesa Elétrica Ergonômica C/ Regulagem Altura BlackAir",
+      "store": "Mercado Livre",
+      "price": 559.0
+    },
+    {
+      "id": "o18",
+      "title": "Mesa Com Regulagem de Altura DT3 F10",
+      "store": "Amazon.com.br - Seller",
+      "price": 902.4
+    },
+    {
+      "id": "o20",
+      "title": "Mesa Com Regulagem de Altura DT3 F10",
+      "store": "Amazon.com.br - Seller",
+      "price": 902.4
+    },
+    {
+      "id": "o2",
+      "title": "Mesa F10 Com Regulagem De Altura Dt3 (All White (todo branco))",
+      "store": "Studio Casa Decor",
+      "price": 1545.99
+    },
+    {
+      "id": "o17",
+      "title": "Mesa Com Regulagem de Altura Elétrica Elements Misch",
+      "store": "Elements",
+      "price": 1699.0
+    },
+    {
+      "id": "o21",
+      "title": "Mesa com Regulagem de Altura Elétrica Elements Misch Branco",
+      "store": "Elements",
+      "price": 1699.0
+    },
+    {
+      "id": "o16",
+      "title": "Elevate Play Mesa com Regulagem de Altura Compacta",
+      "store": "Mercado Livre",
+      "price": 1462.1
+    },
+    {
+      "id": "o19",
+      "title": "Elevate Play Mesa com Regulagem de Altura Compacta",
+      "store": "Magalu",
+      "price": 1605.5
+    },
+    {
+      "id": "o13",
+      "title": "Mesa Elétrica Fortrek Lift 120x60cm Altura Ajustável Branca",
+      "store": "Magalu",
+      "price": 843.04
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "o18",
+        "o20"
+      ],
+      [
+        "o2"
+      ],
+      [
+        "o17"
+      ],
+      [
+        "o21"
+      ],
+      [
+        "o16",
+        "o19"
+      ],
+      [
+        "o13"
+      ]
+    ],
+    "discard": [
+      "o0",
+      "o1",
+      "o22"
+    ]
+  }
+}

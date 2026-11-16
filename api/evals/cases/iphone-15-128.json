@@ -1,0 +1,69 @@
+{
+  "id": "iphone-15-128",
+  "source": "synthetic (realistic Brazilian listings written for the eval)",
+  "note": "Colors differ; 256 GB contradicts the query; cases, screen protectors and used phones are discarded.",
+  "query": "iphone 15 128gb",
+  "category": "electronics",
+  "country": "br",
+  "listings": [
+    {
+      "id": "a",
+      "title": "Apple iPhone 15 128GB Preto",
+      "store": "Magalu",
+      "price": 4599.0
+    },
+    {
+      "id": "b",
+      "title": "iPhone 15 Apple 128GB Preto",
+      "store": "Amazon.com.br",
+      "price": 4499.0
+    },
+    {
+      "id": "c",
+      "title": "Apple iPhone 15 128GB Azul",
+      "store": "Casas Bahia",
+      "price": 4599.0
+    },
+    {
+      "id": "d",
+      "title": "Apple iPhone 15 256GB Preto",
+      "store": "Magalu",
+      "price": 5299.0
+    },
+    {
+      "id": "e",
+      "title": "Capinha iPhone 15 Silicone Transparente",
+      "store": "Shopee",
+      "price": 49.0
+    },
+    {
+      "id": "f",
+      "title": "iPhone 15 128GB Preto Seminovo",
+      "store": "Trocafone",
+      "price": 3299.0
+    },
+    {
+      "id": "g",
+      "title": "Película de Vidro 3D iPhone 15",
+      "store": "Mercado Livre",
+      "price": 19.9
+    }
+  ],
+  "expected": {
+    "groups": [
+      [
+        "a",
+        "b"
+      ],
+      [
+        "c"
+      ]
+    ],
+    "discard": [
+      "d",
+      "e",
+      "f",
+      "g"
+    ]
+  }
+}

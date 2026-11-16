@@ -1,0 +1,1863 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Price Scout",
+    "description": "Furniture shopping agent: plans, searches, compares and builds a plan.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Check that the API is up",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/markets": {
+      "get": {
+        "tags": [
+          "markets"
+        ],
+        "summary": "The countries the app can shop in",
+        "operationId": "list_markets_markets_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Market"
+                  },
+                  "type": "array",
+                  "title": "Response List Markets Markets Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shopping-requests": {
+      "post": {
+        "tags": [
+          "shopping requests"
+        ],
+        "summary": "Submit a shopping request",
+        "description": "Returns at once with the request id. Poll GET /shopping-requests/{id}.",
+        "operationId": "submit_shopping_requests_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShoppingRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShoppingRequest"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid fields or a country the app does not cover."
+          },
+          "429": {
+            "description": "Too many requests in the last hour."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "shopping requests"
+        ],
+        "summary": "List shopping requests, newest first",
+        "operationId": "history_shopping_requests_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RequestSummary"
+                  },
+                  "title": "Response History Shopping Requests Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shopping-requests/{request_id}": {
+      "get": {
+        "tags": [
+          "shopping requests"
+        ],
+        "summary": "Read a shopping request and its progress",
+        "operationId": "read_shopping_requests__request_id__get",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShoppingRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No shopping request with this id."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "shopping requests"
+        ],
+        "summary": "Delete a finished shopping request and its model calls",
+        "operationId": "delete_shopping_requests__request_id__delete",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "No shopping request with this id."
+          },
+          "401": {
+            "description": "The admin token is missing or wrong."
+          },
+          "409": {
+            "description": "The request is still running."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/observability": {
+      "get": {
+        "tags": [
+          "observability"
+        ],
+        "summary": "Agent runs, model calls, tools and costs",
+        "operationId": "overview_observability_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Overview"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The admin token is missing or wrong."
+          },
+          "503": {
+            "description": "The dbt views are missing; run dbt build."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/observability/requests/{request_id}/calls": {
+      "get": {
+        "tags": [
+          "observability"
+        ],
+        "summary": "Every model call of one shopping request, in order",
+        "operationId": "request_calls_observability_requests__request_id__calls_get",
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LlmCall"
+                  },
+                  "title": "Response Request Calls Observability Requests  Request Id  Calls Get"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The admin token is missing or wrong."
+          },
+          "404": {
+            "description": "No shopping request with this id."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/observability/evals": {
+      "get": {
+        "tags": [
+          "observability"
+        ],
+        "summary": "Judge accuracy runs on the labeled cases, newest first",
+        "operationId": "eval_runs_observability_evals_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EvalRun"
+                  },
+                  "title": "Response Eval Runs Observability Evals Get"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The admin token is missing or wrong."
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AgentStep": {
+        "properties": {
+          "number": {
+            "type": "integer",
+            "title": "Number"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "plan",
+              "replan",
+              "search",
+              "measure",
+              "metrics"
+            ],
+            "title": "Kind"
+          },
+          "tool": {
+            "type": "string",
+            "title": "Tool"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          },
+          "ok": {
+            "type": "boolean",
+            "title": "Ok"
+          },
+          "stage_ms": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "number",
+          "kind",
+          "tool",
+          "summary",
+          "duration_ms",
+          "ok"
+        ],
+        "title": "AgentStep"
+      },
+      "AgentUsage": {
+        "properties": {
+          "input_tokens": {
+            "type": "integer",
+            "title": "Input Tokens",
+            "default": 0
+          },
+          "output_tokens": {
+            "type": "integer",
+            "title": "Output Tokens",
+            "default": 0
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd"
+          },
+          "agent_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agent Model"
+          },
+          "agent_prompt_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agent Prompt Version"
+          }
+        },
+        "type": "object",
+        "title": "AgentUsage"
+      },
+      "CaseResult": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "listings": {
+            "type": "integer",
+            "title": "Listings"
+          },
+          "correct_decisions": {
+            "type": "integer",
+            "title": "Correct Decisions"
+          },
+          "discard": {
+            "$ref": "#/components/schemas/Metric"
+          },
+          "grouping": {
+            "$ref": "#/components/schemas/Metric"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "listings",
+          "correct_decisions",
+          "discard",
+          "grouping"
+        ],
+        "title": "CaseResult"
+      },
+      "DailyUsage": {
+        "properties": {
+          "day": {
+            "type": "string",
+            "format": "date",
+            "title": "Day"
+          },
+          "calls": {
+            "type": "integer",
+            "title": "Calls"
+          },
+          "input_tokens": {
+            "type": "integer",
+            "title": "Input Tokens"
+          },
+          "output_tokens": {
+            "type": "integer",
+            "title": "Output Tokens"
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd"
+          }
+        },
+        "type": "object",
+        "required": [
+          "day",
+          "calls",
+          "input_tokens",
+          "output_tokens",
+          "cost_usd"
+        ],
+        "title": "DailyUsage"
+      },
+      "EvalRun": {
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "judge_model": {
+            "type": "string",
+            "title": "Judge Model"
+          },
+          "prompt_version": {
+            "type": "string",
+            "title": "Prompt Version"
+          },
+          "glossary": {
+            "type": "boolean",
+            "title": "Glossary"
+          },
+          "cases": {
+            "type": "integer",
+            "title": "Cases"
+          },
+          "failed_cases": {
+            "type": "integer",
+            "title": "Failed Cases",
+            "default": 0
+          },
+          "listings": {
+            "type": "integer",
+            "title": "Listings"
+          },
+          "decision_accuracy": {
+            "type": "number",
+            "title": "Decision Accuracy"
+          },
+          "discard": {
+            "$ref": "#/components/schemas/Metric"
+          },
+          "grouping": {
+            "$ref": "#/components/schemas/Metric"
+          },
+          "input_tokens": {
+            "type": "integer",
+            "title": "Input Tokens"
+          },
+          "output_tokens": {
+            "type": "integer",
+            "title": "Output Tokens"
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/CaseResult"
+            },
+            "type": "array",
+            "title": "Results"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_id",
+          "created_at",
+          "judge_model",
+          "prompt_version",
+          "glossary",
+          "cases",
+          "listings",
+          "decision_accuracy",
+          "discard",
+          "grouping",
+          "input_tokens",
+          "output_tokens",
+          "cost_usd",
+          "results"
+        ],
+        "title": "EvalRun"
+      },
+      "FailedRun": {
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "request_id",
+          "description",
+          "error",
+          "created_at"
+        ],
+        "title": "FailedRun"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LlmCall": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "request_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Id"
+          },
+          "task": {
+            "type": "string",
+            "enum": [
+              "agent",
+              "judge"
+            ],
+            "title": "Task"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model"
+          },
+          "prompt_version": {
+            "type": "string",
+            "title": "Prompt Version"
+          },
+          "input_tokens": {
+            "type": "integer",
+            "title": "Input Tokens"
+          },
+          "output_tokens": {
+            "type": "integer",
+            "title": "Output Tokens"
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd"
+          },
+          "latency_ms": {
+            "type": "integer",
+            "title": "Latency Ms"
+          },
+          "ok": {
+            "type": "boolean",
+            "title": "Ok"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "request_id",
+          "task",
+          "model",
+          "prompt_version",
+          "input_tokens",
+          "output_tokens",
+          "cost_usd",
+          "latency_ms",
+          "ok",
+          "error",
+          "created_at"
+        ],
+        "title": "LlmCall"
+      },
+      "LlmStats": {
+        "properties": {
+          "calls": {
+            "type": "integer",
+            "title": "Calls"
+          },
+          "failed_calls": {
+            "type": "integer",
+            "title": "Failed Calls"
+          },
+          "unpriced_calls": {
+            "type": "integer",
+            "title": "Unpriced Calls"
+          },
+          "error_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Rate"
+          },
+          "input_tokens": {
+            "type": "integer",
+            "title": "Input Tokens"
+          },
+          "output_tokens": {
+            "type": "integer",
+            "title": "Output Tokens"
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd"
+          },
+          "avg_latency_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avg Latency Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "calls",
+          "failed_calls",
+          "unpriced_calls",
+          "error_rate",
+          "input_tokens",
+          "output_tokens",
+          "cost_usd",
+          "avg_latency_ms"
+        ],
+        "title": "LlmStats"
+      },
+      "Market": {
+        "properties": {
+          "country": {
+            "type": "string",
+            "pattern": "^[a-z]{2}$",
+            "title": "Country",
+            "description": "Google country code, e.g. \"br\"."
+          },
+          "language": {
+            "type": "string",
+            "pattern": "^[a-z]{2}(-[a-z]{2})?$",
+            "title": "Language",
+            "description": "e.g. \"pt-br\", \"en\"."
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "description": "ISO 4217 code, e.g. \"BRL\"."
+          }
+        },
+        "type": "object",
+        "required": [
+          "country",
+          "language",
+          "currency"
+        ],
+        "title": "Market"
+      },
+      "Metric": {
+        "properties": {
+          "precision": {
+            "type": "number",
+            "title": "Precision"
+          },
+          "recall": {
+            "type": "number",
+            "title": "Recall"
+          },
+          "f1": {
+            "type": "number",
+            "title": "F1"
+          }
+        },
+        "type": "object",
+        "required": [
+          "precision",
+          "recall",
+          "f1"
+        ],
+        "title": "Metric"
+      },
+      "Overview": {
+        "properties": {
+          "runs": {
+            "$ref": "#/components/schemas/RunStats"
+          },
+          "llm": {
+            "$ref": "#/components/schemas/LlmStats"
+          },
+          "by_version": {
+            "items": {
+              "$ref": "#/components/schemas/VersionStats"
+            },
+            "type": "array",
+            "title": "By Version"
+          },
+          "daily": {
+            "items": {
+              "$ref": "#/components/schemas/DailyUsage"
+            },
+            "type": "array",
+            "title": "Daily"
+          },
+          "tools": {
+            "items": {
+              "$ref": "#/components/schemas/ToolStats"
+            },
+            "type": "array",
+            "title": "Tools"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageStats"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "recent_failures": {
+            "items": {
+              "$ref": "#/components/schemas/FailedRun"
+            },
+            "type": "array",
+            "title": "Recent Failures"
+          }
+        },
+        "type": "object",
+        "required": [
+          "runs",
+          "llm",
+          "by_version",
+          "daily",
+          "tools",
+          "stages",
+          "recent_failures"
+        ],
+        "title": "Overview"
+      },
+      "PlanItem": {
+        "properties": {
+          "item": {
+            "type": "string",
+            "title": "Item"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "differences": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Differences"
+          },
+          "max_width_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Width Cm"
+          },
+          "fits": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fits"
+          },
+          "savings": {
+            "type": "number",
+            "title": "Savings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item",
+          "product",
+          "reason",
+          "savings"
+        ],
+        "title": "PlanItem"
+      },
+      "Preferences": {
+        "properties": {
+          "brands": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brands"
+          },
+          "colors": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Colors"
+          },
+          "materials": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Materials"
+          },
+          "payment": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payment",
+            "description": "e.g. \"up to 10 installments\""
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 400
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "title": "Preferences"
+      },
+      "Product": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "furniture",
+              "electronics",
+              "appliances",
+              "books",
+              "food",
+              "health",
+              "beauty",
+              "fashion",
+              "home",
+              "sports",
+              "toys",
+              "pets",
+              "auto",
+              "other"
+            ],
+            "title": "Category"
+          },
+          "width_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width Cm"
+          },
+          "dimensions": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dimensions"
+          },
+          "image_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Url"
+          },
+          "min_price": {
+            "type": "number",
+            "title": "Min Price"
+          },
+          "store_count": {
+            "type": "integer",
+            "title": "Store Count"
+          },
+          "offers": {
+            "items": {
+              "$ref": "#/components/schemas/StoreOffer"
+            },
+            "type": "array",
+            "title": "Offers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "category",
+          "min_price",
+          "store_count",
+          "offers"
+        ],
+        "title": "Product"
+      },
+      "RequestSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "market": {
+            "$ref": "#/components/schemas/Market"
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "done",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "total": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total"
+          },
+          "item_count": {
+            "type": "integer",
+            "title": "Item Count"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "market",
+          "budget",
+          "status",
+          "total",
+          "item_count",
+          "created_at"
+        ],
+        "title": "RequestSummary"
+      },
+      "RunStats": {
+        "properties": {
+          "requests": {
+            "type": "integer",
+            "title": "Requests"
+          },
+          "done": {
+            "type": "integer",
+            "title": "Done"
+          },
+          "failed": {
+            "type": "integer",
+            "title": "Failed"
+          },
+          "in_progress": {
+            "type": "integer",
+            "title": "In Progress"
+          },
+          "success_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Success Rate"
+          },
+          "avg_duration_s": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avg Duration S"
+          },
+          "p95_duration_s": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P95 Duration S"
+          },
+          "total_cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total Cost Usd"
+          },
+          "avg_cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avg Cost Usd"
+          }
+        },
+        "type": "object",
+        "required": [
+          "requests",
+          "done",
+          "failed",
+          "in_progress",
+          "success_rate",
+          "avg_duration_s",
+          "p95_duration_s",
+          "total_cost_usd",
+          "avg_cost_usd"
+        ],
+        "title": "RunStats"
+      },
+      "SearchStats": {
+        "properties": {
+          "searches": {
+            "type": "integer",
+            "title": "Searches",
+            "default": 0
+          },
+          "listings": {
+            "type": "integer",
+            "title": "Listings",
+            "default": 0
+          },
+          "discarded": {
+            "type": "integer",
+            "title": "Discarded",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "SearchStats"
+      },
+      "ShoppingPlan": {
+        "properties": {
+          "market": {
+            "$ref": "#/components/schemas/Market"
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget"
+          },
+          "total": {
+            "type": "number",
+            "title": "Total"
+          },
+          "leftover": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leftover"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PlanItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "unmet": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Unmet"
+          },
+          "insights": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Insights"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/SearchStats"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/AgentUsage"
+          }
+        },
+        "type": "object",
+        "required": [
+          "market",
+          "budget",
+          "total",
+          "leftover",
+          "items",
+          "unmet",
+          "insights",
+          "stats",
+          "usage"
+        ],
+        "title": "ShoppingPlan"
+      },
+      "ShoppingRequest": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "market": {
+            "$ref": "#/components/schemas/Market"
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget"
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/Preferences"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "done",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/AgentStep"
+            },
+            "type": "array",
+            "title": "Steps",
+            "default": []
+          },
+          "plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ShoppingPlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "market",
+          "budget",
+          "preferences",
+          "status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "ShoppingRequest"
+      },
+      "ShoppingRequestBody": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "maxLength": 600,
+            "minLength": 10,
+            "title": "Description",
+            "description": "What the user needs, in free text."
+          },
+          "country": {
+            "type": "string",
+            "title": "Country",
+            "description": "A country code from GET /markets, e.g. \"br\"."
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 10000000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget",
+            "description": "In the country's currency. Optional."
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/Preferences",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "required": [
+          "description",
+          "country"
+        ],
+        "title": "ShoppingRequestBody"
+      },
+      "StageStats": {
+        "properties": {
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "searches": {
+            "type": "integer",
+            "title": "Searches"
+          },
+          "avg_ms": {
+            "type": "number",
+            "title": "Avg Ms"
+          },
+          "p95_ms": {
+            "type": "number",
+            "title": "P95 Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "stage",
+          "searches",
+          "avg_ms",
+          "p95_ms"
+        ],
+        "title": "StageStats"
+      },
+      "StoreOffer": {
+        "properties": {
+          "store": {
+            "type": "string",
+            "title": "Store"
+          },
+          "price": {
+            "type": "number",
+            "title": "Price"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "store_icon": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Store Icon"
+          },
+          "installment_months": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Installment Months"
+          },
+          "installment_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Installment Amount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "store",
+          "price"
+        ],
+        "title": "StoreOffer"
+      },
+      "ToolStats": {
+        "properties": {
+          "tool": {
+            "type": "string",
+            "title": "Tool"
+          },
+          "calls": {
+            "type": "integer",
+            "title": "Calls"
+          },
+          "failed_calls": {
+            "type": "integer",
+            "title": "Failed Calls"
+          },
+          "avg_duration_ms": {
+            "type": "number",
+            "title": "Avg Duration Ms"
+          },
+          "p95_duration_ms": {
+            "type": "number",
+            "title": "P95 Duration Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tool",
+          "calls",
+          "failed_calls",
+          "avg_duration_ms",
+          "p95_duration_ms"
+        ],
+        "title": "ToolStats"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VersionStats": {
+        "properties": {
+          "task": {
+            "type": "string",
+            "enum": [
+              "agent",
+              "judge"
+            ],
+            "title": "Task"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model"
+          },
+          "prompt_version": {
+            "type": "string",
+            "title": "Prompt Version"
+          },
+          "calls": {
+            "type": "integer",
+            "title": "Calls"
+          },
+          "failed_calls": {
+            "type": "integer",
+            "title": "Failed Calls"
+          },
+          "input_tokens": {
+            "type": "integer",
+            "title": "Input Tokens"
+          },
+          "output_tokens": {
+            "type": "integer",
+            "title": "Output Tokens"
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd"
+          },
+          "avg_latency_ms": {
+            "type": "number",
+            "title": "Avg Latency Ms"
+          },
+          "p95_latency_ms": {
+            "type": "number",
+            "title": "P95 Latency Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task",
+          "model",
+          "prompt_version",
+          "calls",
+          "failed_calls",
+          "input_tokens",
+          "output_tokens",
+          "cost_usd",
+          "avg_latency_ms",
+          "p95_latency_ms"
+        ],
+        "title": "VersionStats"
+      }
+    }
+  }
+}

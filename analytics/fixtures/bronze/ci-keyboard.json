@@ -1,0 +1,18 @@
+{
+  "search_id": "ci-keyboard",
+  "query": "teclado mecânico rosa",
+  "country": "br",
+  "fetched_at": "2026-11-16T12:00:00Z",
+  "payload": {
+    "shopping_results": [
+      {"position": 1, "title": "Teclado Mecânico Redragon Kumara Rosa", "source": "KaBuM!", "extracted_price": 249.9, "link": "https://example.com/kabum/kumara", "thumbnail": "https://example.com/kumara.jpg", "source_icon": "https://example.com/kabum.png", "installment": {"period": 10, "extracted_price": 24.99}},
+      {"position": 2, "title": "Teclado Mecânico Redragon Kumara Rosa", "source": "KaBuM!", "extracted_price": 249.9, "link": "https://example.com/kabum/kumara-2"},
+      {"position": 3, "title": "  Teclado Redragon Kumara Rosa ABNT2  ", "source": "Amazon", "extracted_price": 279.0, "product_link": "https://example.com/amazon/kumara"},
+      {"position": 4, "title": "Teclado Redragon Kumara", "source": "Amazon", "extracted_price": 299.0, "link": "https://example.com/amazon/kumara-b"},
+      {"position": 5, "title": "Kit Keycaps Rosa", "source": "Shopee", "extracted_price": 59.9, "link": "https://example.com/shopee/keycaps"},
+      {"position": 6, "title": "Teclado sem preço", "source": "Loja X", "link": "https://example.com/x"},
+      {"position": 7, "title": "Teclado de brinde", "source": "Loja Y", "extracted_price": 0, "link": "https://example.com/y"},
+      {"position": 8, "source": "Loja Z", "extracted_price": 199.0, "link": "https://example.com/z"}
+    ]
+  }
+}
